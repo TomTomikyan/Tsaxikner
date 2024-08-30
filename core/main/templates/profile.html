@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #343a40;
+            padding: 1em;
+            text-align: center;
+        }
+        header a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        .profile-info {
+            text-align: center;
+            padding: 50px;
+        }
+        .profile-info h1 {
+            font-size: 2em;
+            color: #343a40;
+        }
+        .profile-info p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        .profile-info img {
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .profile-info button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .profile-info button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+        li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px auto;
+            padding: 20px;
+            text-align: center;
+            width: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        li img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        li p {
+            font-size: 1em;
+            color: #555;
+        }
+        .total-price {
+            text-align: center;
+            font-size: 1.5em;
+            color: #343a40;
+            margin: 20px 0;
+        }
+        .continue-shopping {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .continue-shopping button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .continue-shopping button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'Home' %}">Գլխավոր</a>
+        <a href="{% url 'Product' %}">Խանութ</a>
+        <a href="{% url 'Profile' %}">Պրոֆիլ</a>
+        <a href="{% url 'Support' %}">Կապ</a>
+        <a href="#">Մեր մասին</a>
+        <a href="{% url 'Cart' %}">Զամբյուղ</a>
+    </header>
+    <div class="profile-info">
+        <h1>Օգտատիրոջ պրոֆիլ</h1>
+        {% if avatar_url %}
+            <img src="{{ avatar_url }}" alt="Avatar" width="100" height="100">
+        {% else %}
+            <img src="favicon.png" alt="Default Avatar">
+        {% endif %}
+        <p>Օգտ․ անուն՝ {{ user.username }}</p>
+        <p>Email {{ user.email }}</p>
+        <a href="{% url 'edit_profile' %}"><button>Փոխել նկարը</button></a>
+        <a href="{% url 'Login' %}"><button>Դուրս գալ</button></a>
+    </div>
+    <ul>
+        {% for item in cart_items %}
+            <li>
+                <img src="{{ item.product.img.url }}" alt="{{ item.product.name }}">
+                <p>{{ item.product.name }}</p> 
+                <p>{{ item.product.price }} դրամ</p> 
+                <p>{{ item.quantity }} հատ</p>
+            </li>
+        {% endfor %}
+    </ul>
+    <p class="total-price">Ընդհանուր արժեք՝ {{ total_price }} դրամ</p>
+    <div class="continue-shopping">
+        <a href="{% url 'Product' %}"><button>Շարունակել առևտուրը</button></a>
+    </div>
+</body>
+</html>

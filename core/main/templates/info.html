@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ինֆո</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #343a40;
+            padding: 1em;
+            text-align: center;
+        }
+        header a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        .product-info {
+            text-align: center;
+            padding: 50px;
+        }
+        .product-info h2 {
+            font-size: 2em;
+            color: #343a40;
+        }
+        .product-info p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        .product-info img {
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .product-info button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .product-info button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'Home' %}">Գլխավոր</a>
+        <a href="{% url 'Product' %}">Խանութ</a>
+        <a href="{% url 'Profile' %}">Պրոֆիլ</a>
+        <a href="{% url 'Support' %}">Կապ</a>
+        <a href="#">Մեր մասին</a>
+        <a href="{% url 'Cart' %}">Զամբյուղ</a>
+    </header>
+
+    <div class="product-info">
+        <h2>{{ product_info.name }}</h2>
+        <img src="{{ product_info.img.url }}" alt="{{ product_info.name }}" style="width:300px;height:300px;">
+        <p>{{ product_info.text }}</p>
+        <p>Գին՝ {{ product_info.price }} դրամ</p>
+        <form method="post" action="{% url 'AddToCart' product_info.id %}">
+            {% csrf_token %}
+            <label for="quantity">Քանակ</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1">
+            <button type="submit">Զամբյուղի մեջ</button>
+        </form>
+    </div>
+</body>
+</html>
