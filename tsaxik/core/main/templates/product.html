@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ապրանքներ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #343a40;
+            padding: 1em;
+            text-align: center;
+        }
+        header a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        form {
+            margin: 20px;
+            text-align: center;
+        }
+        label {
+            font-size: 1.2em;
+        }
+        select {
+            padding: 5px;
+            font-size: 1em;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        li img {
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        p {
+            font-size: 1em;
+            color: #555;
+        }
+        form {
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            width: 50px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'Home' %}">Գլխավոր</a>
+        <a href="{% url 'Product' %}">Խանութ</a>
+        <a href="{% url 'Profile' %}">Պրոֆիլ</a>
+        <a href="{% url 'Support' %}">Կապ</a>
+        <a href="#">Մեր մասին</a>
+        <a href="{% url 'Cart' %}">Զամբյուղ</a>
+    </header>
+
+    <form method="GET" action="">
+        <label for="category">Ընտրել Կատեգորիա՝</label>
+        <select name="category" id="category" onchange="this.form.submit()">
+            <option value="">Բոլորը</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+    
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'ProductInfo' product.id %}">
+                    <h2>{{ product.name }}</h2>
+                    <img src="{{ product.img.url }}" alt="{{ product.name }}" style="width:100px;height:100px;">
+                </a>
+                <p>Գինը՝ {{ product.price }} դրամ</p>
+                <p>Կատեգորիա՝ {{ product.category.name }}</p>
+                <form method="post" action="{% url 'AddToCart' product.id %}">
+                    {% csrf_token %}
+                    <label for="quantity_{{ product.id }}">քանակը</label>
+                    <input type="number" id="quantity_{{ product.id }}" name="quantity" min="1" value="1">
+                    <button type="submit">Զամբյուղի մեջ</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

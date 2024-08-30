@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Գլխավոր</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #343a40;
+            padding: 1em;
+            text-align: center;
+        }
+        header a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        main {
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #343a40;
+        }
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'Home' %}">Գլխավոր</a>
+        <a href="{% url 'Product' %}">Խանութ</a>
+        <a href="{% url 'Profile' %}">Պրոֆիլ</a>
+        <a href="{% url 'Support' %}">Կապ</a>
+        <a href="#">Մեր մասին</a>
+        <a href="{% url 'Cart' %}">Զամբյուղ</a>
+    </header>
+    
+    <main>
+        <h1>Բարի գալուստ մեր կայք</h1>
+        <p>Այստեղ դուք կարող եք գտնել տարբեր տեսակի ապրանքներ և օգտվել մեր ծառայություններից։</p>
+    </main>
+</body>
+</html>

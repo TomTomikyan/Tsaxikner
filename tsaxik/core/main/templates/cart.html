@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Զամբյուղ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #343a40;
+            padding: 1em;
+            text-align: center;
+        }
+        header a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 80%;
+            margin: 0 auto;
+        }
+        li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        li img {
+            border-radius: 5px;
+            margin-right: 20px;
+            width: 100px;
+            height: 100px;
+        }
+        li p {
+            margin: 0;
+            font-size: 1.2em;
+            color: #343a40;
+        }
+        p.total-price {
+            text-align: center;
+            font-size: 1.5em;
+            color: #343a40;
+            margin-top: 20px;
+        }
+        a button, form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 10px;
+        }
+        a button:hover, form button:hover {
+            background-color: #0056b3;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'Home' %}">Գլխավոր</a>
+        <a href="{% url 'Product' %}">Խանութ</a>
+        <a href="{% url 'Profile' %}">Պրոֆիլ</a>
+        <a href="{% url 'Support' %}">Կապ</a>
+        <a href="#">Մեր մասին</a>
+        <a href="{% url 'Cart' %}">Զամբյուղ</a>
+    </header>
+
+    <h1>Զամբյուղ</h1>
+    <ul>
+        {% for item in cart_items %}
+            <li>
+                <img src="{{ item.product.img.url }}" alt="{{ item.product.name }}">
+                <div>
+                    <p>{{ item.product.name }}</p>
+                    <p>{{ item.product.price }} դրամ</p>
+                    <p>{{ item.quantity }} հատ</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <p class="total-price">Ընդհանուր արժեք՝ {{ total_price }} դրամ</p>
+    <div class="actions">
+        <a href="{% url 'Product' %}"><button>Շարունակել ավելին</button></a>
+        <form method="post" action="{% url 'Checkout' %}">
+            {% csrf_token %}
+            <button type="submit">Գնել</button>
+        </form>
+    </div>
+</body>
+</html>
